@@ -142,6 +142,20 @@ app.post("/v1/translated/vote", (req, res) => {
 
 app.get("/health", (_, res) => res.json({ status: "ok", service: "sakayori-lyrics" }))
 
+app.get("/", (_, res) => res.json({
+  service: "SakayoriLyrics API",
+  version: "1.0.0",
+  endpoints: [
+    "GET /v1/:videoId",
+    "GET /v1/translated/:videoId/:language",
+    "POST /v1",
+    "POST /v1/translated",
+    "POST /v1/vote",
+    "POST /v1/translated/vote",
+  ],
+  docs: "https://music.sakayori.dev/docs",
+}))
+
 initDb().then(() => {
   app.listen(PORT, () => console.log(`SakayoriLyrics API running on :${PORT}`))
 })
