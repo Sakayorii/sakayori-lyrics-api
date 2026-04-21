@@ -59,10 +59,10 @@ async function initDb() {
       UNIQUE(videoId, language)
     )
   `)
+  migrateSchema()
   db.run(`CREATE INDEX IF NOT EXISTS idx_lyrics_title_artist ON lyrics(songTitle, artistName)`)
   db.run(`CREATE INDEX IF NOT EXISTS idx_lyrics_quality ON lyrics(qualityScore DESC, vote DESC)`)
   db.run(`CREATE INDEX IF NOT EXISTS idx_lyrics_created ON lyrics(createdAt DESC)`)
-  migrateSchema()
   saveDb()
 }
 
