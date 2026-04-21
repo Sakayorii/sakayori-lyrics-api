@@ -80,7 +80,8 @@ function migrateSchema() {
       db.run("ALTER TABLE lyrics ADD COLUMN richSyncWordCount INTEGER NOT NULL DEFAULT 0")
     }
     if (!names.includes("updatedAt")) {
-      db.run("ALTER TABLE lyrics ADD COLUMN updatedAt TEXT NOT NULL DEFAULT (datetime('now'))")
+      db.run("ALTER TABLE lyrics ADD COLUMN updatedAt TEXT NOT NULL DEFAULT ''")
+      db.run("UPDATE lyrics SET updatedAt = createdAt WHERE updatedAt = ''")
     }
     const tCols = db.exec("PRAGMA table_info(translated_lyrics)")[0]?.values || []
     const tNames = tCols.map((c) => c[1])
